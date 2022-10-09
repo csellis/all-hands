@@ -21,7 +21,6 @@
             player = new Plyr(playerEl)
             handleSelectRoom($Rooms[0])
         }
-        console.log({player, playerEl, sauce: player?.source, sauces: player?.sources})
     }
 
     function handleSelectRoom(room) {
@@ -49,8 +48,6 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.2/plyr.css" />
 </svelte:head>
 
-{youtubeVideo}
-
 <div class="grid gap-4 grid-cols-12 max-w-screen-lg w-full mx-auto">
     <ul class="col-span-3 bg-slate-200 rounded-md shadow-lg">
         {#each $Rooms as Room}
@@ -66,19 +63,13 @@
         {#if selectedRoom}
             <h2 class="text-xl text-slate-800">{selectedRoom.name}</h2>
 
-            <!-- {#key youtubeVideo}
-            <video title="{selectedRoom.name}" class="aspect-video" >
-                <source src="{youtubeVideo}" type="video/mp4">
-                <track kind="captions"/>
-            </video>
-            {/key} -->
-
             <div class="plyr__video-embed" id="player" bind:this={playerEl}>
                 {#key youtubeVideo}
                 <iframe
                 id="youtube"
                   src="{youtubeVideo}"
                   title="{selectedRoom?.name}"
+                  class="h-auto rounded-lg shadow-md overflow-hidden w-full mt-4 min-h-[50vh]"
                   allowfullscreen
                   allowtransparency
                   autoplay
