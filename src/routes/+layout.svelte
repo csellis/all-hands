@@ -33,7 +33,6 @@
     {#if $user}
       <Navbar />
       <slot />
-      <ChannelManager />
     {:else}
       <Auth />
     {/if}

@@ -2,10 +2,13 @@ import { writable } from "svelte/store";
 
 import { supabase } from "../services/supabase";
 
-export const Messages = writable();
+export const Messages = writable([]);
 
-export const loadMessages = async () => {
-  const { data, error } = await supabase.from("Messages").select();
+export const loadMessages = async (room_id) => {
+  const { data, error } = await supabase
+    .from("Messages")
+    .select()
+    .eq("room_id", room_id);
   if (error) {
     console.error(error);
   }
@@ -15,10 +18,10 @@ export const loadMessages = async () => {
 export const messagesSubscription = supabase
   .from("Messages")
   .on("*", (payload) => {
-    console.log("Change received!", payload);
-    // if (payload.eventType === "UPDATE") {
-    //   Settings.set([payload.new]);
-    // }
+    // console.log("Change received!", payload);
+    if (payload.eventType === "INSERT") {
+      Messages.update((existing) => [...existing, payload.new]);
+    }
   })
   .subscribe();
 
@@ -40,6 +43,8 @@ export const insertMessage = async (room_id, message) => {
   };
   const { data, error } = await supabase.from("Messages").insert(payload);
 
-  console.log({ data });
-  // Messages.update((existing) => [...existing, data.])
+  if (error) console.error(error);
+  return {
+    succeess: true,
+  };
 };
