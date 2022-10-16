@@ -21,30 +21,36 @@
     }
   }
 
-  $: youtubeVideo = `${selectedRoom?.videoUrl}?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1&amp;autoplay=1`;
+
 </script>
 
 <svelte:head>
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.2/plyr.css" />
 </svelte:head>
 
-{#if selectedRoom && youtubeVideo}
-  <div transition:fade={{ duration: 150 }}>
+<div>
+  {#if selectedRoom}
+  {#key selectedRoom}
+  <div transition:fade={{ duration: 150 }} class="max-w-screen-lg mx-auto">
     <h2 class="text-xl text-slate-800">{selectedRoom.name}</h2>
-
-    <div class="plyr__video-embed" id="player" bind:this={playerEl}>
-      {#key youtubeVideo}
+    
+    <div class="plyr__video-embed w-full" id="player" bind:this={playerEl}>
         <iframe
-          id="youtube"
-          src={youtubeVideo}
-          title={selectedRoom?.name}
-          class="h-auto rounded-lg shadow-md overflow-hidden w-full mt-4 min-h-[50vh]"
-          allowfullscreen
-          allowtransparency
-          autoplay
-          allow="autoplay"
+        id="youtube"
+        src={selectedRoom?.videoUrl}
+        title={selectedRoom?.name}
+        class="rounded-lg shadow-md overflow-hidden mt-4"
+        allowtransparency
+        frameborder="0"
+        allow="autoplay"
+        style="position: relative;"
         />
-      {/key}
     </div>
   </div>
-{/if}
+  {/key}
+  {/if}
+</div>
+
+<style>
+  .plyr, .plyr .plyr__video-embed iframe, #youtube { max-height: 100vh; }
+</style>

@@ -2,12 +2,13 @@
   import "../app.css";
   import { user } from "../stores/auth";
   import { supabase } from "../services/supabase";
-  import { loadRooms, Rooms } from "../stores/rooms";
-
+  
   import Auth from "../components/Auth.svelte";
   import Navbar from "../components/Navbar.svelte";
+  
+  import { loadRooms, Rooms } from "../stores/rooms";
   import { loadSettings, Settings } from "../stores/settings";
-  import ChannelManager from "../components/ChannelManager.svelte";
+  import {loadProfile, Profile} from '../stores/profile'
 
   user.set(supabase.auth.user());
 
@@ -16,6 +17,7 @@
 
     if (session?.user) {
       loadRooms();
+      loadProfile();
     }
   });
   let firstLoad = true;
@@ -23,8 +25,13 @@
     if (firstLoad) {
       loadSettings();
       loadRooms();
+      loadProfile();
       firstLoad = false;
     }
+  }
+
+  $: {
+    console.log("profile", $Profile);
   }
 </script>
 
