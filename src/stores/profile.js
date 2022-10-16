@@ -2,16 +2,16 @@ import { writable } from "svelte/store";
 
 import { supabase } from "../services/supabase";
 
-export const Profile = writable({});
+export const profile = writable({});
 
 export const loadProfile = async () => {
-  const { data: profile, error } = await supabase.from("profiles").select("id, role").single();
+  const { data: data, error } = await supabase.from("users").select().single().eq("id", supabase.auth.user().id);
   if (error) {
     console.error(error);
   }
-
-  if (profile) {
-    Profile.set(profile);
+  console.log("profile", data);
+  if (data) {
+    profile.set(data);
   }
   return;
 };
