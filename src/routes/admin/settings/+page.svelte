@@ -11,6 +11,10 @@
   }
 
   function setRoom(room) {
+    Settings.update((settings) => {
+      settings[0].current_room = room.id;
+      return settings;
+    });
     updateSettings($Settings[0].id, { current_room: room.id });
   }
 </script>

@@ -1,10 +1,9 @@
 <script>
   export let profile, showForRole;
-
 </script>
 
 <div>
-  {#if profile && showForRole && profile.role === showForRole}
+  {#if profile && profile.roles && showForRole && profile?.roles.includes(showForRole)}
     <slot />
   {/if}
 </div>

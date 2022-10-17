@@ -28,11 +28,15 @@
       loadRooms();
       firstLoad = false;
     }
+
+    if ($user && Object.keys($user).length > 0 && Object.keys($profile).length === 0) {
+      loadProfile();
+    }
   }
 
-  $: {
-    console.log("profile", $profile);
-  }
+  // $: {
+  //   console.log("profile", $profile);
+  // }
 </script>
 
 <div class="bg-yellow-50 min-h-screen">
