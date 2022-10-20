@@ -23,9 +23,9 @@ export const settingsSubscription = supabase
   .subscribe();
 
 export const updateSettings = async (id, payload) => {
-  const { data, error } = await supabase
-    .from("Settings")
-    .update(payload)
-    .match({ id });
+  const { data, error } = await supabase.from("Settings").update(payload).match({ id });
   if (error) console.error(error);
+  if (data) {
+    Settings.set(data);
+  }
 };
