@@ -29,3 +29,12 @@ We aim to help smaller organizations host branded Virtual Events (some batteries
 1. Create a Supabase Instance
 2. Rename `.env-example` to `.env` and fill in your details
 3. `npm install` & `npm run dev`
+4. Follow steps in `SUPABASE.MD`
+
+## Before Release
+
+1. Add the SMTP settings to full control email delivery. Otherwise you will hit limits on emails sent out. (image in static/smtp.png)
+   1. Navigate to **Authentication > Email Templates**
+   2. Toggle **Enable Custom SMTP**
+   3. Fill in all the fields
+2. Check your RLS
