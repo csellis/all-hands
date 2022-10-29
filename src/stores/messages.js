@@ -4,11 +4,8 @@ import { supabase } from "../services/supabase";
 
 export const Messages = writable([]);
 
-export const loadMessages = async (room_id) => {
-  const { data, error } = await supabase
-    .from("Messages")
-    .select()
-    .eq("room_id", room_id);
+export const loadMessages = async (channel_id) => {
+  const { data, error } = await supabase.from("messages").select().eq("channel_id", channel_id);
   if (error) {
     console.error(error);
   }
@@ -16,7 +13,7 @@ export const loadMessages = async (room_id) => {
 };
 
 export const messagesSubscription = supabase
-  .from("Messages")
+  .from("messages")
   .on("*", (payload) => {
     // console.log("Change received!", payload);
     if (payload.eventType === "INSERT") {
@@ -26,22 +23,19 @@ export const messagesSubscription = supabase
   .subscribe();
 
 export const updateMessage = async (id, payload) => {
-  const { data, error } = await supabase
-    .from("Messages")
-    .update(payload)
-    .match({ id });
+  const { data, error } = await supabase.from("messages").update(payload).match({ id });
   if (error) console.error(error);
 };
 
-export const insertMessage = async (room_id, message) => {
+export const insertMessage = async (channel_id, message) => {
   const user = supabase.auth.user();
   const user_id = user?.id;
   const payload = {
-    room_id,
+    channel_id,
     message,
     user_id,
   };
-  const { data, error } = await supabase.from("Messages").insert(payload);
+  const { data, error } = await supabase.from("messages").insert(payload);
 
   if (error) console.error(error);
   return {

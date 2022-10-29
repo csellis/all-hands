@@ -20,6 +20,7 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.7",
-    "plyr": "^3.7.2"
+    "plyr": "^3.7.2",
+    "vite": "^3.2.1"
   }
 }
